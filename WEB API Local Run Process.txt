@@ -1,0 +1,70 @@
+#Getting your code up and running on local machine.
+----------------------------------------------------------------
+It involves the processes like
+
+1. Installation process
+2. Software dependencies
+3. Latest releases
+4. API references
+
+Seed project for angular apps using ES6 and webpack bundler.
+This project was tested with the latest version of nodeJS and npm,
+Please make sure you have atleast installed 
+
+1) [node.js](https://nodejs.org/) 5+ 
+2) [NPM](https://www.npmjs.com/) 3+
+
+## Usage & Develop
+----------------------------
+- Make sure you are at the Root of repository
+- Run 'npm install' to install dependencies
+- Run 'npm install auth0-js angular-lock angular-jwt angular-auth0@2.0.0-beta.2' to Install "auth0 lock dependencies"
+- Run 'npm install angular-chart.js angular-nvd3' to Install "Chart dependencies"
+- Run 'npm install angular-route@1.6.4 @uirouter/angularjs' to install "Route dependencies"
+- Run 'npm install angular-storage ng-dialog angular-paging json-tree2 angular-xeditable' to Install other dependencies
+- Run 'gulp serve' if any error occurs like "node-sass" go with 'npm rebuild node-sass' or other error related to npm then use  'npm update'
+- Open Browser and check 
+   "Url: http://localhost:3000"
+
+#Running node js Server:
+--------------------------------
+- go to the folder 'srv' in the project.
+- run 'node index.js'
+
+#Running gulp server:
+---------------------------
+- go to the root folder in the project
+- run 'gulp serve'
+
+# Build & Debug:
+----------------------
+
+1) To create a ready production distribution package of the project please run 'npm run build'
+
+2) If any error occurs related to Webpack go with 'npm install webpack'
+
+3) After running build, generated files will be available at '/dist'(Distribution Folder - Server side usage)
+
+4) 'dist' makes all the templates and scripts as of server side.
+
+5) Change the root path from 'Client' to 'dist' and run the gulp as 'gulp serve'.
+
+6) If the dist was perfectly build, then the server should connect and results a message
+    "Webpack Compiled Successfully".   
+
+
+# Testing:
+------------
+
+This seed is has protractor and karma for end to end testing and unit testing respectively.
+
+# Unit Testing:
+------------------
+
+Make sure your tests are named with a '-test.js' suffix.
+ Then, to run "karma" simply run 'npm test'
+
+# End to end Testing:
+---------------------------
+
+To start protractor tests please run 'npm run protractor'

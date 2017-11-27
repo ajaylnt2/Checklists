@@ -1,0 +1,168 @@
+                                                     NODEJS WEB APPLICTION DEPLOYMENT - AZURE CLOUD APP SERVICE
+                                                    *********************************************************************
+
+                                                    LSI Web Portal:
+                                                    --------------------
+
+
+A) Web App Creation:
+..................................
+
+Step 1: Log in Microsoft Azure Account
+
+Step 2: Click "App Services" category
+
+Step 3: Click "Add" and in search type "Node Js Empty Web App" template.
+
+Step 4: Click Create
+
+Step 4: Fill the details
+            App Name: lsiwebportal
+            Subscription: Free Trail
+            Resource Group: lsiRG
+            App Service plan/Location: Choose your App Service Plan
+            Application Insights: Based on requirement(default off)
+           check "Pin To Dashboard"
+           Click "Create"
+
+Step 5: Click on your App Service after creation 
+            Status: Running
+            Url: http://lsiwebportal.azurewebsites.net
+            Click browse-It should display a dummy page template with respective url.
+
+Step 6: Go to Application Settings option in App Service and check the path in 
+           Virtual Applications and directories level
+             site\wwwroot\
+             (It varies depending on the application)
+
+Step 7: Here we have a chance to make a custom domain for our app service in "Custom Domain" category
+            we can change as per the choice.
+
+Step 8: Hence, a Web App is created successfully.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+B) Database Creation:
+.................................
+
+Step 1: Go to SQL Databases category in Azure Portal and click "Add"
+
+Step 2: Fill the details
+            Database Name: LSIPortalDB
+            Subscription: Free
+            Resource Group: lsiRG
+            Select Source: Blank Database(even with local backup it is possible)
+            Click Server Option
+            Server:
+                      Server Name: lsisqlserver.database.windows.net
+                      Server Admin Login:lsiuser
+                      Password: user@123
+                      Confirm Password: user@123
+                     Location: Better choose a common location for all services
+                     click "select"
+            want to use SQL elastic pool: Not Now(useful in application with large db size)
+            Pricing tier: useful in case of multiple database with a warehouse
+            Click "Create" option.
+
+Hence a Database with SQL Server created successfully
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+C: Deployment:
+.......................
+(Using Source Control - Git Bash)
+
+Step 1: Install Git Bash latest version in your local machine.
+
+Step 2: Make a new folder and copy the source code into it and save it with the project name 
+Ex: "LSIWebPortal"
+
+Step 3: Then, open Git bash and give the path as root folder of latest project as
+            just type:
+                        cd desktop (it gives path to desktop)
+                        cd LSIWebPortal (it extends to project folder)
+                       
+             then type,
+                          git init (initialises git and it makes the project folder as your GIT repositry)
+
+Step 4: Now go back to portal and make git repositry bind with your App Service.
+for that,
+           Azure Portal 
+           -> Your App Service 
+           -> Deployment Options
+           -> Choose Data Source 
+                  in this select option as "Local Git Repositry"
+           -> Click "OK"
+
+Step 5: Go to Deployment Credentials options and note down the 
+             > User name
+             > Password
+
+Step 6: Go to Properties in your App Service and copy the git remote path 
+            " Git Url"
+
+Step 7: Back to Git for deployment process
+            just type 
+            git add '*' (this command will add all your local repositry to GIT)
+            git commit -m " any related message" (which saves all the data in GIT repositry)
+            git remote add azure remotepath (remote path will GIT url which we copied earlier)
+            git push azure master
+            here we will have the chance to use the GIT Credentials
+            once the credentials are accepted
+            Then, GIT will push the source code to App Service
+             In other words Deployments process starts now.
+
+If everything fine finally GIT will dispaly
+"Deployment Completed Successfully".
+
+Step 8: Go to your App Service and click "Browse"
+
+Then it display the desired output with respect to the source code. 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+D) Database Updation (Local to Cloud):
+
+Process A:
+.................
+Step 1: Open SQL Server Management Studio
+
+Step 2: Open Object Explorer -> Click Connect
+                                              Enter Details:
+                                              server: (azure sql server name-> Ex; "lsisqlserver.database.windows.net")   
+                                              Authentication: Sqlserver
+                                              User Name: lsiuser (Azure Sql Username)
+                                              Password: user@123 (Azure Sql Password)  
+                                              Click "OK"
+            if everything fine with DNS,Proxy restrictions and port accesses issues
+            it connects to azure sql server and display the database.
+
+Step 3: Just right click on respective database
+           -> Tasks
+           -> Deploy database to Microsoft Azure SQL Database
+           Fill all the details
+           If everything fine your local database will be directly migrated to Azure Cloud DB
+
+Process B:
+.................
+Step 1: Connect to your local Sql Server with Local Database
+
+Step 2: Make your Local DB with required data (Tables) and save it a part
+
+Step 3: Right Click on Local Database
+           -> Tasks
+           -> Generate Scripts
+           -> Fill all details with a new file pat on desktop and click OK
+ then, the whole database will be converted as a single script file (Just like ur Database Backup)
+
+Step 4: Then ,disconnect your Local server and reconnect with Azure Sql server with Cloud server credentials
+
+Step 5: Right click on database which created earlier in cloud
+            -> New Query
+            -> Just paste the logic from script file which we saved earlier
+            -> Then, click Execute
+
+so, now the Azure Sql Database will resembles with the required project data.
+
+Hence, the Database Migration is Successfully completed.
+
+Summary:
+
+If Database Migration done perfectly.
+If Source code migration completed successfully through source conrol GIT..
+The App Service should work as per the logic mentioned in the project...
+   --------------------------------------------------------------------------------------< THE - END>-------------------------------------------------------------------------------------------------
